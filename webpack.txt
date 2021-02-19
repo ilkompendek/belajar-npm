@@ -1,0 +1,45 @@
+Bagaimana webpack bekerja?
+
+5 konsep perilaku webpack
+1. entri: 
+    - titik awal webpack menganalisa berkas dan membentuk dependency graph
+2. output: 
+    - berkas bundel yg dihasilan dari file yang yg dianalisis  berdasarkan entri
+    - memeberitahu dimana webpack dimana lokasi static aset yang telah dibundel
+3. loader: 
+    - tool webpack untuk transformasi file selain js/json yang diiimpor menjadi format ang digunakan tahap produksi
+    - untuk menetapkan loader, webpack membutuhkan modul rule
+        - ada 2 high level properties 
+            1. test untuk tipe file yang akan ditransform
+            2. use merupakan loader yang digunakan untuk menransformasi file test
+4. plugin: 
+    - melakukan tugas seperti optimasi bundel, managemen aset dansb
+    - webpack jadi lebih fleksibel
+    - merupakan sebuah js objek yd dibuat dengan js class yang didalemnya ada method apply(compiler)
+5. mode: kondisi/status yg dipakai webpack yang harus dijalankan saat menjalankan tugasnya
+            (modenya: production, developtment, none)
+
+jadi:
+webpack menerima entri dan menganalisa tiap modul
+webpack membundel hasil entri  menjadi satu file statis untuk tahap produksi
+
+
+
+const path = require('path');
+const ConsoleLogOnBuildWebpackPlugin = require("./console-log-on-build-webpack-plugin.js");
+  
+module.exports = {
+  entry: './path/to/my/entry/file.js',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'my-first-webpack.bundle.js'
+  },
+  rules: [
+      { test: /\.css$/, use: 'css-loader' } => harus diinstall dulu pakai npm install 
+    ],
+    plugins: [
+    new ConsoleLogOnBuildWebpackPlugin({
+        message: "The webpack build process is starting!"
+    })
+    ]
+};
